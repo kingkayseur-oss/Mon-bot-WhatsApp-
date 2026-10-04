@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GLITCH GUY BOT • Panel</title>
+<style>
+:root{--bg:#05070b;--card:rgba(13,17,25,.76);--line:#293241;--txt:#f4f7fb;--muted:#8d99aa}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--txt)}
+body{overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;width:280px;height:280px;border-radius:50%;filter:blur(80px);opacity:.18;pointer-events:none;z-index:-2}
+body:before{background:#ffffff;top:-100px;left:-100px;animation:float 8s ease-in-out infinite}
+body:after{background:#5c6cff;right:-120px;bottom:-100px;animation:float 10s ease-in-out infinite reverse}
+.grid{position:fixed;inset:0;background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);z-index:-3}
+.wrap{width:min(940px,92%);margin:auto;padding:28px 0 18px}
+.hero{position:relative;text-align:center;padding:30px 20px 24px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#111722cc,#080b10cc);backdrop-filter:blur(18px);box-shadow:0 25px 90px #0009;overflow:hidden}
+.scan{position:absolute;left:0;right:0;top:-10%;height:2px;background:#fff8;box-shadow:0 0 25px #fff;animation:scan 5s linear infinite}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid #3b4658;border-radius:999px;background:#ffffff08;font-size:12px;color:#c8d0dc;letter-spacing:1px}
+.dot{width:8px;height:8px;border-radius:50%;background:#8cffc1;box-shadow:0 0 15px #8cffc1;animation:pulse 1.5s infinite}
+h1{font-size:clamp(29px,7vw,58px);margin:18px 0 6px;letter-spacing:3px;text-shadow:0 0 25px #fff3}
+.subtitle{color:var(--muted);font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.card{border:1px solid var(--line);border-radius:20px;background:var(--card);backdrop-filter:blur(15px);padding:17px;transition:.25s;box-shadow:0 10px 35px #0005}
+.card:hover{transform:translateY(-4px);border-color:#596579}
+.label{font-size:11px;color:#8995a6;text-transform:uppercase;letter-spacing:1.5px}.value{font-size:21px;font-weight:800;margin-top:5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+button{cursor:pointer;border:1px solid #3a4657;background:#141a24;color:#fff;border-radius:15px;padding:12px 18px;font-weight:800;transition:.22s}
+button:hover{transform:translateY(-2px);background:#1c2431;box-shadow:0 8px 25px #0008}
+.primary{background:#eef1f5;color:#080b10;border-color:#fff}.primary:hover{background:#fff}
+.panel{display:grid;grid-template-columns:1fr;gap:14px}
+.menuBox{min-height:300px;border:1px solid var(--line);border-radius:22px;background:#070a0fdd;padding:17px;box-shadow:inset 0 0 40px #0008}
+pre{margin:0;white-space:pre-wrap;word-break:break-word;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;color:#d9e0ea}
+.pair{display:none;text-align:center;padding:18px;border:1px dashed #445064;border-radius:18px;background:#ffffff04}
+.pair.show{display:block}.code{font:900 30px ui-monospace,monospace;letter-spacing:6px;margin-top:7px}
+.footer{text-align:center;padding:28px 10px 10px;color:#7f8a9b;font-size:12px;letter-spacing:1.5px}
+.footer strong{display:block;margin-top:7px;font-size:15px;color:#dce2eb;letter-spacing:2px;text-shadow:0 0 16px #fff4}
+.footer span{display:inline-block;animation:glitch 2.5s infinite}
+a{color:#dfe5ee;text-decoration:none}
+@keyframes scan{0%{top:-10%}100%{top:110%}}
+@keyframes pulse{50%{opacity:.3;transform:scale(.7)}}
+@keyframes float{50%{transform:translate(40px,30px)}}
+@keyframes glitch{0%,88%,100%{transform:none}90%{transform:translate(2px,-1px)}92%{transform:translate(-2px,1px)}}
+@media(max-width:650px){.cards{grid-template-columns:1fr}.hero{padding:25px 13px}.wrap{width:94%}}
+</style>
+</head>
+<body>
+<div class="grid"></div>
+<div class="wrap">
+<section class="hero">
+<div class="scan"></div>
+<div class="badge"><i class="dot"></i><span id="badge">SYSTEM INITIALIZING</span></div>
+<h1>🍓 GLITCH GUY BOT</h1>
+<div class="subtitle">PUBLIC WHATSAPP PANEL • COMMAND CENTER</div>
+<div class="cards">
+<div class="card"><div class="label">Status</div><div class="value" id="status">—</div></div>
+<div class="card"><div class="label">Commands</div><div class="value" id="commands">190</div></div>
+<div class="card"><div class="label">Prefix</div><div class="value">🍓</div></div>
+</div>
+</section>
+
+<div class="actions">
+<button class="primary" onclick="loadMenu()">🍓 OUVRIR LE MENU</button>
+<button onclick="refresh()">↻ ACTUALISER</button>
+<button onclick="showPair()">🔐 PAIRING</button>
+</div>
+
+<div class="pair" id="pair">
+<div>CODE DE CONNEXION</div>
+<div class="code" id="code">—</div>
+<div style="color:#8793a5;font-size:12px;margin-top:8px">Le code apparaît ici lorsque le bot prépare la connexion.</div>
+</div>
+
+<section class="panel">
+<div class="menuBox"><pre id="menu">Appuie sur « 🍓 OUVRIR LE MENU » pour afficher les commandes.</pre></div>
+</section>
+
+<div class="card" style="margin-top:14px;text-align:center">
+<div class="label">Chaîne officielle</div>
+<div style="margin-top:8px"><a id="channel" href="#" target="_blank">Ouvrir la chaîne</a></div>
+</div>
+
+<footer class="footer">
+<div>POWERED BY</div>
+<strong><span>MR KING KAYSEUR • THE GLITCH DEV</span></strong>
+<div style="margin-top:7px">© GLITCH GUY BOT</div>
+</footer>
+</div>
+
+<script>
+async function refresh(){
+ try{
+  const x=await (await fetch('/api/status')).json();
+  document.getElementById('status').textContent=x.status||'OFFLINE';
+  document.getElementById('commands').textContent=x.commands||190;
+  document.getElementById('badge').textContent='SYSTEM '+(x.status||'OFFLINE');
+  document.getElementById('code').textContent=x.pairingCode||'—';
+  const a=document.getElementById('channel');a.href=x.channel||'#';
+ }catch(e){document.getElementById('status').textContent='OFFLINE';document.getElementById('badge').textContent='SYSTEM OFFLINE'}
+}
+async function loadMenu(){
+ const r=await fetch('/api/menu');
+ document.getElementById('menu').textContent=await r.text();
+ await refresh();
+}
+function showPair(){document.getElementById('pair').classList.toggle('show');refresh()}
+refresh();setInterval(refresh,5000);
+</script>
+</body>
+</html>
