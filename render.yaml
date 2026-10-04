@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: glitch-guy-bot
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PAIRING_NUMBER
+        sync: false
+      - key: CHANNEL_LINK
+        value: https://whatsapp.com/channel/0029Vb8cfQn8V0te5K0atc1s
